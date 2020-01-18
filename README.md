@@ -1,8 +1,8 @@
 # Search GraphQL Jobs
 
 This repository contains the solution for
-[the CHEHANA challenge](https://github.com/graphql-jobs/docs/challenge.pdf), in
-order to get the **Frontend Developer** position of the company.
+[the CHEHANA challenge](https://github.com/rqbazan/graphql-jobs/blob/master/docs/challenge.pdf),
+in order to get the **Frontend Developer** position of the company.
 
 ### FrontEnd
 
