@@ -4,12 +4,17 @@ This repository contains the solution for
 [the CHEHANA challenge](https://github.com/rqbazan/graphql-jobs/blob/master/docs/challenge.pdf),
 in order to get the **Frontend Developer** position of the company.
 
-### FrontEnd
+### Deploy 🚀
+
+- [NextJS App](https://graphql-jobs.now.sh/)
+- [Storybook App](https://graphql-jobs.now.sh/storybook/index.html)
+
+### FrontEnd 😊
 
 - NextJS
 - TailwindCSS
 
-### BackEnd, powered by [GraphQL Jobs](https://graphql.jobs/)
+### BackEnd, powered by [GraphQL Jobs](https://graphql.jobs/) 💯
 
 - [GraphQL Jobs API](https://api.graphql.jobs/)
 

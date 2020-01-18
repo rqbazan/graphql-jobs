@@ -1,3 +1,4 @@
 import React from 'react'
+import Button from '../components/button'
 
-export default () => <div className="p-4 bg-red-400">hello there</div>
+export default () => <Button />

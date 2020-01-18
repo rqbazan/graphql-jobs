@@ -1,3 +1,6 @@
 {
-  "extends": "rqbazan-ts/react"
+  "extends": "rqbazan-ts/react",
+  "rules": {
+    "import/extensions": "off"
+  }
 }
