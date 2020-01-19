@@ -23,12 +23,13 @@ in order to get the **Frontend Developer** position of the company.
 
 ### How to setup the project? 👨‍🔧
 
-1. Execute `yarn`
+1. Just execute `yarn`
 
 ### How to run the project? 💻
 
-1. Execute `yarn dev`
-2. Go to http://localhost:3000
+1. Create a `.env` following the `.env.example`
+2. Execute `yarn dev`
+3. Go to http://localhost:3000
 
 ### Design 👨‍🎨
 
