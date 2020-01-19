@@ -11,8 +11,11 @@ in order to get the **Frontend Developer** position of the company.
 
 ### FrontEnd 😊
 
-- NextJS
-- TailwindCSS
+- [NextJS](https://nextjs.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Storybook](https://storybook.js.org/)
+- [Apollo Client](https://www.apollographql.com/)
+- [GraphQL Codegen](https://graphql-code-generator.com/)
 
 ### BackEnd, powered by [GraphQL Jobs](https://graphql.jobs/) 💯
 

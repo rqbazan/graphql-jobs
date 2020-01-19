@@ -1,0 +1,33 @@
+.switch {
+  @apply block cursor-pointer;
+}
+
+.switch > input[type='checkbox']:checked {
+  & + .switch--background {
+    @apply bg-secondary;
+
+    & > .switch--circle {
+      left: calc(100% - var(--size));
+    }
+  }
+}
+
+.switch--background {
+  @apply flex h-8 rounded-full relative items-center shadow;
+
+  transition: background 250ms;
+
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.switch--circle {
+  --size: 28px;
+
+  @apply bg-white absolute rounded-full shadow left-0;
+
+  height: var(--size);
+  width: var(--size);
+  transition: left 250ms;
+}
