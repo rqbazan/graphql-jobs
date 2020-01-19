@@ -1,3 +1,6 @@
+import gql from 'graphql-tag'
+import * as ApolloReactCommon from '@apollo/react-common'
+import * as ApolloReactHooks from '@apollo/react-hooks'
 export type Maybe<T> = T | null
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -1075,3 +1078,62 @@ export type User = {
   createdAt: Scalars['DateTime']
   updatedAt: Scalars['DateTime']
 }
+
+export const RefDataDocument = gql`
+  query RefData {
+    countries {
+      id
+      name
+      slug
+    }
+    companies {
+      id
+      name
+      slug
+    }
+  }
+`
+
+/**
+ * __useRefDataQuery__
+ *
+ * To run a query within a React component, call `useRefDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRefDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRefDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRefDataQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    RefDataQuery,
+    RefDataQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<RefDataQuery, RefDataQueryVariables>(
+    RefDataDocument,
+    baseOptions
+  )
+}
+export function useRefDataLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    RefDataQuery,
+    RefDataQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<RefDataQuery, RefDataQueryVariables>(
+    RefDataDocument,
+    baseOptions
+  )
+}
+export type RefDataQueryHookResult = ReturnType<typeof useRefDataQuery>
+export type RefDataLazyQueryHookResult = ReturnType<typeof useRefDataLazyQuery>
+export type RefDataQueryResult = ApolloReactCommon.QueryResult<
+  RefDataQuery,
+  RefDataQueryVariables
+>
