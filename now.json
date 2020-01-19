@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "build": {
+    "env": {
+      "API_URL": "https://api.graphql.jobs"
+    }
+  }
+}

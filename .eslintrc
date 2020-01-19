@@ -1,5 +1,6 @@
 {
   "extends": "rqbazan-ts/react",
+  "ignorePatterns": ["generated"],
   "rules": {
     "import/extensions": "off",
     "import/no-unresolved": "off"
