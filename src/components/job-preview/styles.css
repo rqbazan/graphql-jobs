@@ -1,7 +1,0 @@
-.job-preview--title {
-  @apply text-gray-800;
-}
-
-.job-preview--subtitle {
-  @apply flex text-gray-600 text-xs;
-}
