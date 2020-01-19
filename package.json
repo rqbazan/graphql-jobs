@@ -12,7 +12,7 @@
     "storybook": "start-storybook -p 3001 -s public",
     "start": "next start",
     "build:next": "next build",
-    "build:storybook": "build-storybook -o public/storybook -s public",
+    "build:storybook": "APP_ENV=storybook build-storybook -o public/storybook -s public",
     "build": "run-p build:*",
     "eslint": "eslint --ignore-path .gitignore --ext .ts,.tsx",
     "lint": "yarn eslint .",
