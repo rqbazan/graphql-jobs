@@ -1,5 +1,5 @@
 .input {
-  @apply rounded-full h-10 px-4 shadow w-full;
+  @apply h-10 px-4 w-full bg-transparent;
 
   &:focus {
     @apply outline-none;

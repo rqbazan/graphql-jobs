@@ -6,3 +6,7 @@ export default { title: 'SearchBar' }
 export const Mobile = () => {
   return <SearchBar.Mobile />
 }
+
+export const Desktop = () => {
+  return <SearchBar.Desktop />
+}
