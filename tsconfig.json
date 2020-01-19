@@ -16,7 +16,8 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "@codegen": ["src/generated/codegen.d.ts"]
     }
   },
   "exclude": ["node_modules"],

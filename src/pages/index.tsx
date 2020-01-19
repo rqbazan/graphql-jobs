@@ -3,6 +3,7 @@ import SearchBar from '~/components/search-bar'
 import JobPreview from '~/components/job-preview'
 import AppTitle from '~/components/app-title'
 import MainLayout from '~/layouts/main'
+import withApollo from '~/hocs/with-apollo'
 
 // FIXME: col-gap-4 row-gap-4 not working
 
@@ -25,4 +26,4 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage
+export default withApollo(IndexPage)
