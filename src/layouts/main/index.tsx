@@ -1,26 +1,21 @@
 import React from 'react'
 import Router from 'next/router'
 import Icon from '~/components/icon'
+import Content, { ContentType } from './content'
 
 export interface MainLayoutProps {
   title?: React.ReactNode
   showBackIcon?: boolean
-  offset: number
+  className?: string
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({
-  children,
-  title,
-  offset,
-  showBackIcon = false
-}) => {
+const MainLayout: React.FC<MainLayoutProps> & {
+  Content: ContentType
+} = ({ children, title, showBackIcon = false }) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-end h-32 md:h-48 bg-primary">
-        <div
-          className="px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto"
-          style={{ marginBottom: offset + 16 }}
-        >
+        <div className="px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto">
           {showBackIcon && (
             <div
               role="button"
@@ -35,14 +30,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({
           {title && <div className="md:text-center">{title}</div>}
         </div>
       </div>
-      <div
-        style={{ marginTop: -offset }}
-        className="px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto"
-      >
-        {children}
-      </div>
+      {children}
     </div>
   )
 }
+
+MainLayout.Content = Content
 
 export default MainLayout
