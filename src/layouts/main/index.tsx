@@ -20,7 +20,7 @@ const MainLayout: React.FC<MainLayoutProps> & {
             <div
               role="button"
               tabIndex={0}
-              className="pt-6 absolute top-0"
+              className="md:hidden pt-6 absolute top-0"
               onClick={() => Router.back()}
               onKeyPress={() => Router.back()}
             >
