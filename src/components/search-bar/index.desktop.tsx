@@ -8,9 +8,11 @@ export interface SearchBarMobileProps {
   className?: string
 }
 
-const SearchBarDesktopProps: React.FC<SearchBarMobileProps> = () => {
+const SearchBarDesktopProps: React.FC<SearchBarMobileProps> = ({
+  className
+}) => {
   return (
-    <div className="flex">
+    <div className={cs('flex', className)}>
       <div className="flex-1 flex">
         <Input
           className="w-1/2 rounded-r-none z-10"
