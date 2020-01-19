@@ -13,7 +13,7 @@
 }
 
 .switch--background {
-  @apply h-full flex rounded-full relative items-center shadow;
+  @apply h-full flex rounded-full relative items-center shadow bg-gray-400;
 
   transition: background 250ms;
 
