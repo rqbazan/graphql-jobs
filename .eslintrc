@@ -1,6 +1,7 @@
 {
   "extends": "rqbazan-ts/react",
   "rules": {
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "import/no-unresolved": "off"
   }
 }

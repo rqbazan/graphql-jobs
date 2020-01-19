@@ -1,0 +1,15 @@
+.input {
+  @apply rounded-full h-10 px-4 shadow w-full;
+
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.input-icon {
+  @apply mx-4 absolute;
+
+  & + input {
+    @apply pl-12 pr-4;
+  }
+}

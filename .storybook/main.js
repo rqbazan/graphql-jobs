@@ -1,9 +1,15 @@
 const path = require('path')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   stories: ['../src/**/*.stories.tsx'],
   webpackFinal: config => {
-    config.module.rules.push({
+    const {
+      module: { rules },
+      resolve
+    } = config
+
+    rules.push({
       test: /\.(ts|tsx)$/,
       loader: require.resolve('babel-loader'),
       options: {
@@ -11,7 +17,7 @@ module.exports = {
       }
     })
 
-    config.module.rules.push({
+    rules.push({
       test: /\.css$/,
       loader: require.resolve('postcss-loader'),
       options: {
@@ -21,7 +27,17 @@ module.exports = {
       }
     })
 
-    config.resolve.extensions.push('.ts', '.tsx')
+    const fileLoaderRule = rules.find(rule => rule.test.test('.svg'))
+    fileLoaderRule.exclude = path.resolve('src/icons')
+
+    rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
+    })
+
+    resolve.plugins = [new TsconfigPathsPlugin()]
+
+    resolve.extensions.push('.ts', '.tsx')
 
     return config
   }
