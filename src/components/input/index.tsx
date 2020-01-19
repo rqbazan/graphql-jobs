@@ -9,7 +9,12 @@ export interface InputProps
 
 const Input: React.FC<InputProps> = ({ icon = null, className, ...props }) => {
   return (
-    <div className={cs('flex items-center relative', className)}>
+    <div
+      className={cs(
+        'flex items-center relative rounded-full overflow-hidden shadow bg-white',
+        className
+      )}
+    >
       {!!icon && <div className="input--icon">{icon}</div>}
       <input
         className="input"
