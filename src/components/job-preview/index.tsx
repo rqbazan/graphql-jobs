@@ -1,5 +1,6 @@
 import React from 'react'
 import cs from 'classnames'
+import Avatar from '../avatar'
 
 export interface JobPreviewProps {
   className?: string
@@ -11,7 +12,7 @@ const JobPreview: React.FC<JobPreviewProps> = ({ className }) => {
       role="button"
       className={cs('flex rounded-xl bg-white p-4 shadow', className)}
     >
-      <div className="mr-2 rounded-1/2 bg-red-400 h-12 w-12" />
+      <Avatar />
       <div className="flex flex-col justify-between">
         <div className="text-gray-800 font-medium">
           Senior Fullstack Engineer
