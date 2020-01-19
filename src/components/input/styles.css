@@ -6,7 +6,7 @@
   }
 }
 
-.input-icon {
+.input--icon {
   @apply mx-4 absolute;
 
   & + input {
