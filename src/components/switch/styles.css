@@ -1,5 +1,5 @@
 .switch {
-  @apply block cursor-pointer;
+  @apply block cursor-pointer h-8;
 }
 
 .switch > input[type='checkbox']:checked {
@@ -13,7 +13,7 @@
 }
 
 .switch--background {
-  @apply flex h-8 rounded-full relative items-center shadow;
+  @apply h-full flex rounded-full relative items-center shadow bg-gray-400;
 
   transition: background 250ms;
 
