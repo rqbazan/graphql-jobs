@@ -11,5 +11,5 @@ export default {
 }
 
 export const Default = () => {
-  return <AdvancedSearch />
+  return <AdvancedSearch onClose={() => null} companies={[]} countries={[]} />
 }

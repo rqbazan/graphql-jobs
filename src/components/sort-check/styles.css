@@ -1,0 +1,27 @@
+.sort-check {
+  @apply inline-block cursor-pointer;
+}
+
+.sort-check > input[type='checkbox']:checked {
+  & + .sort-check--icon {
+    @apply bg-white;
+
+    & > svg path {
+      fill: black;
+    }
+  }
+}
+
+.sort-check--icon {
+  @apply flex items-center justify-center bg-gray-400 rounded-1/2 h-10 w-10 shadow;
+
+  transition: background 250ms;
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  & > svg path {
+    fill: gray;
+  }
+}
