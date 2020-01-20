@@ -2,12 +2,17 @@ import React from 'react'
 import cs from 'classnames'
 import Icon from '../icon'
 
-export interface SelectProps {
+export interface SelectProps
+  extends React.SelectHTMLAttributes<HTMLSelectElement> {
   prompt?: string
-  className?: string
 }
 
-const Select: React.FC<SelectProps> = ({ prompt, children, className }) => {
+const Select: React.FC<SelectProps> = ({
+  prompt,
+  children,
+  className,
+  ...props
+}) => {
   return (
     <div
       className={cs(
@@ -15,10 +20,11 @@ const Select: React.FC<SelectProps> = ({ prompt, children, className }) => {
         className
       )}
     >
-      <select className="bg-transparent appearance-none focus:outline-none w-full pl-4 pr-10 h-full">
-        <option value="" hidden>
-          {prompt}
-        </option>
+      <select
+        className="bg-transparent appearance-none focus:outline-none w-full pl-4 pr-10 h-full"
+        {...props}
+      >
+        <option value="">{prompt}</option>
         {children}
       </select>
       <Icon

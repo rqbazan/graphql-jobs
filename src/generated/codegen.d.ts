@@ -764,27 +764,32 @@ export type LocationsInput = {
 
 export type Mutation = {
   __typename?: 'Mutation'
-  subscribe: User
   postJob: Job
-  updateJob: Job
+  setSearchArgs: Scalars['Boolean']
+  subscribe: User
   updateCompany: Company
-}
-
-export type MutationSubscribeArgs = {
-  input: SubscribeInput
+  updateJob: Job
 }
 
 export type MutationPostJobArgs = {
   input: PostJobInput
 }
 
-export type MutationUpdateJobArgs = {
-  input: UpdateJobInput
-  adminSecret: Scalars['String']
+export type MutationSetSearchArgsArgs = {
+  input: SearchArgsInput
+}
+
+export type MutationSubscribeArgs = {
+  input: SubscribeInput
 }
 
 export type MutationUpdateCompanyArgs = {
   input: UpdateCompanyInput
+  adminSecret: Scalars['String']
+}
+
+export type MutationUpdateJobArgs = {
+  input: UpdateJobInput
   adminSecret: Scalars['String']
 }
 
@@ -800,29 +805,19 @@ export type PostJobInput = {
 
 export type Query = {
   __typename?: 'Query'
-  jobs: Array<Job>
-  job: Job
-  locations: Array<Location>
-  city: City
-  country: Country
-  remote: Remote
-  commitments: Array<Commitment>
   cities: Array<City>
-  countries: Array<Country>
-  remotes: Array<Remote>
+  city: City
+  commitments: Array<Commitment>
   companies: Array<Company>
-}
-
-export type QueryJobsArgs = {
-  input?: Maybe<JobsInput>
-}
-
-export type QueryJobArgs = {
-  input: JobInput
-}
-
-export type QueryLocationsArgs = {
-  input: LocationsInput
+  countries: Array<Country>
+  country: Country
+  getSearchArgs: SearchArgs
+  job: Job
+  jobs: Array<Job>
+  locations: Array<Location>
+  remote: Remote
+  remotes: Array<Remote>
+  searchJobs?: Maybe<Array<Maybe<Job>>>
 }
 
 export type QueryCityArgs = {
@@ -833,8 +828,24 @@ export type QueryCountryArgs = {
   input: LocationInput
 }
 
+export type QueryJobArgs = {
+  input: JobInput
+}
+
+export type QueryJobsArgs = {
+  input?: Maybe<JobsInput>
+}
+
+export type QueryLocationsArgs = {
+  input: LocationsInput
+}
+
 export type QueryRemoteArgs = {
   input: LocationInput
+}
+
+export type QuerySearchJobsArgs = {
+  input: SearchArgsInput
 }
 
 export type Remote = {
@@ -952,6 +963,21 @@ export type RemoteWhereInput = {
   AND?: Maybe<Array<RemoteWhereInput>>
   OR?: Maybe<Array<RemoteWhereInput>>
   NOT?: Maybe<Array<RemoteWhereInput>>
+}
+
+export type SearchArgs = {
+  __typename?: 'SearchArgs'
+  term: Scalars['String']
+  countrySlug: Scalars['String']
+  companySlug: Scalars['String']
+  orderByCreatedAt: Scalars['Boolean']
+}
+
+export type SearchArgsInput = {
+  term?: Maybe<Scalars['String']>
+  countrySlug?: Maybe<Scalars['String']>
+  companySlug?: Maybe<Scalars['String']>
+  orderByCreatedAt?: Maybe<Scalars['Boolean']>
 }
 
 export type SubscribeInput = {
@@ -1079,6 +1105,410 @@ export type User = {
   updatedAt: Scalars['DateTime']
 }
 
+export type SetSearchArgsMutationVariables = {
+  input: SearchArgsInput
+}
+
+export type SetSearchArgsMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'setSearchArgs'
+>
+
+export type CompanyJobsQueryVariables = {
+  where: JobWhereInput
+  orderBy?: Maybe<JobOrderByInput>
+}
+
+export type CompanyJobsQuery = { __typename?: 'Query' } & {
+  companies: Array<
+    { __typename?: 'Company' } & Pick<Company, 'id' | 'slug'> & {
+        jobs: Maybe<
+          Array<
+            { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
+                commitment: { __typename?: 'Commitment' } & Pick<
+                  Commitment,
+                  'id' | 'title'
+                >
+                cities: Maybe<
+                  Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
+                >
+                company: Maybe<
+                  { __typename?: 'Company' } & Pick<
+                    Company,
+                    'id' | 'name' | 'logoUrl'
+                  >
+                >
+              }
+          >
+        >
+      }
+  >
+}
+
+export type CountryJobsQueryVariables = {
+  where: JobWhereInput
+  orderBy?: Maybe<JobOrderByInput>
+  countrySlug: Scalars['String']
+}
+
+export type CountryJobsQuery = { __typename?: 'Query' } & {
+  country: { __typename?: 'Country' } & Pick<Country, 'id' | 'name'> & {
+      jobs: Maybe<
+        Array<
+          { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
+              commitment: { __typename?: 'Commitment' } & Pick<
+                Commitment,
+                'id' | 'title'
+              >
+              cities: Maybe<
+                Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
+              >
+              company: Maybe<
+                { __typename?: 'Company' } & Pick<
+                  Company,
+                  'id' | 'name' | 'logoUrl'
+                >
+              >
+            }
+        >
+      >
+    }
+}
+
+export type SearchArgsQueryVariables = {}
+
+export type SearchArgsQuery = { __typename?: 'Query' } & {
+  searchArgs: { __typename?: 'SearchArgs' } & Pick<
+    SearchArgs,
+    'term' | 'countrySlug' | 'companySlug' | 'orderByCreatedAt'
+  >
+}
+
+export type RefDataQueryVariables = {}
+
+export type RefDataQuery = { __typename?: 'Query' } & {
+  countries: Array<
+    { __typename?: 'Country' } & Pick<Country, 'id' | 'name' | 'slug'>
+  >
+  companies: Array<
+    { __typename?: 'Company' } & Pick<Company, 'id' | 'name' | 'slug'>
+  >
+}
+
+export type RemoteJobsQueryVariables = {
+  where: JobWhereInput
+  orderBy?: Maybe<JobOrderByInput>
+}
+
+export type RemoteJobsQuery = { __typename?: 'Query' } & {
+  remotes: Array<
+    { __typename?: 'Remote' } & Pick<Remote, 'id'> & {
+        jobs: Maybe<
+          Array<
+            { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
+                commitment: { __typename?: 'Commitment' } & Pick<
+                  Commitment,
+                  'id' | 'title'
+                >
+                cities: Maybe<
+                  Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
+                >
+                company: Maybe<
+                  { __typename?: 'Company' } & Pick<
+                    Company,
+                    'id' | 'name' | 'logoUrl'
+                  >
+                >
+              }
+          >
+        >
+      }
+  >
+}
+
+export type JobsQueryVariables = {
+  input: SearchArgsInput
+}
+
+export type JobsQuery = { __typename?: 'Query' } & {
+  jobs: Maybe<
+    Array<
+      Maybe<
+        { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
+            commitment: { __typename?: 'Commitment' } & Pick<
+              Commitment,
+              'id' | 'title'
+            >
+            cities: Maybe<
+              Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
+            >
+            company: Maybe<
+              { __typename?: 'Company' } & Pick<
+                Company,
+                'id' | 'name' | 'logoUrl'
+              >
+            >
+          }
+      >
+    >
+  >
+}
+
+export const SetSearchArgsDocument = gql`
+  mutation SetSearchArgs($input: SearchArgsInput!) {
+    setSearchArgs(input: $input) @client
+  }
+`
+export type SetSearchArgsMutationFn = ApolloReactCommon.MutationFunction<
+  SetSearchArgsMutation,
+  SetSearchArgsMutationVariables
+>
+
+/**
+ * __useSetSearchArgsMutation__
+ *
+ * To run a mutation, you first call `useSetSearchArgsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetSearchArgsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setSearchArgsMutation, { data, loading, error }] = useSetSearchArgsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSetSearchArgsMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    SetSearchArgsMutation,
+    SetSearchArgsMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    SetSearchArgsMutation,
+    SetSearchArgsMutationVariables
+  >(SetSearchArgsDocument, baseOptions)
+}
+export type SetSearchArgsMutationHookResult = ReturnType<
+  typeof useSetSearchArgsMutation
+>
+export type SetSearchArgsMutationResult = ApolloReactCommon.MutationResult<
+  SetSearchArgsMutation
+>
+export type SetSearchArgsMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  SetSearchArgsMutation,
+  SetSearchArgsMutationVariables
+>
+export const CompanyJobsDocument = gql`
+  query CompanyJobs($where: JobWhereInput!, $orderBy: JobOrderByInput) {
+    companies {
+      id
+      slug
+      jobs(where: $where, orderBy: $orderBy) {
+        id
+        title
+        commitment {
+          id
+          title
+        }
+        cities {
+          id
+          name
+        }
+        company {
+          id
+          name
+          logoUrl
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useCompanyJobsQuery__
+ *
+ * To run a query within a React component, call `useCompanyJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCompanyJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCompanyJobsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useCompanyJobsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    CompanyJobsQuery,
+    CompanyJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<CompanyJobsQuery, CompanyJobsQueryVariables>(
+    CompanyJobsDocument,
+    baseOptions
+  )
+}
+export function useCompanyJobsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    CompanyJobsQuery,
+    CompanyJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    CompanyJobsQuery,
+    CompanyJobsQueryVariables
+  >(CompanyJobsDocument, baseOptions)
+}
+export type CompanyJobsQueryHookResult = ReturnType<typeof useCompanyJobsQuery>
+export type CompanyJobsLazyQueryHookResult = ReturnType<
+  typeof useCompanyJobsLazyQuery
+>
+export type CompanyJobsQueryResult = ApolloReactCommon.QueryResult<
+  CompanyJobsQuery,
+  CompanyJobsQueryVariables
+>
+export const CountryJobsDocument = gql`
+  query CountryJobs(
+    $where: JobWhereInput!
+    $orderBy: JobOrderByInput
+    $countrySlug: String!
+  ) {
+    country(input: { slug: $countrySlug }) {
+      id
+      name
+      jobs(where: $where, orderBy: $orderBy) {
+        id
+        title
+        commitment {
+          id
+          title
+        }
+        cities {
+          id
+          name
+        }
+        company {
+          id
+          name
+          logoUrl
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useCountryJobsQuery__
+ *
+ * To run a query within a React component, call `useCountryJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountryJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCountryJobsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      countrySlug: // value for 'countrySlug'
+ *   },
+ * });
+ */
+export function useCountryJobsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    CountryJobsQuery,
+    CountryJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<CountryJobsQuery, CountryJobsQueryVariables>(
+    CountryJobsDocument,
+    baseOptions
+  )
+}
+export function useCountryJobsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    CountryJobsQuery,
+    CountryJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    CountryJobsQuery,
+    CountryJobsQueryVariables
+  >(CountryJobsDocument, baseOptions)
+}
+export type CountryJobsQueryHookResult = ReturnType<typeof useCountryJobsQuery>
+export type CountryJobsLazyQueryHookResult = ReturnType<
+  typeof useCountryJobsLazyQuery
+>
+export type CountryJobsQueryResult = ApolloReactCommon.QueryResult<
+  CountryJobsQuery,
+  CountryJobsQueryVariables
+>
+export const SearchArgsDocument = gql`
+  query SearchArgs {
+    searchArgs: getSearchArgs @client {
+      term
+      countrySlug
+      companySlug
+      orderByCreatedAt
+    }
+  }
+`
+
+/**
+ * __useSearchArgsQuery__
+ *
+ * To run a query within a React component, call `useSearchArgsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchArgsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchArgsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSearchArgsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    SearchArgsQuery,
+    SearchArgsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<SearchArgsQuery, SearchArgsQueryVariables>(
+    SearchArgsDocument,
+    baseOptions
+  )
+}
+export function useSearchArgsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    SearchArgsQuery,
+    SearchArgsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    SearchArgsQuery,
+    SearchArgsQueryVariables
+  >(SearchArgsDocument, baseOptions)
+}
+export type SearchArgsQueryHookResult = ReturnType<typeof useSearchArgsQuery>
+export type SearchArgsLazyQueryHookResult = ReturnType<
+  typeof useSearchArgsLazyQuery
+>
+export type SearchArgsQueryResult = ApolloReactCommon.QueryResult<
+  SearchArgsQuery,
+  SearchArgsQueryVariables
+>
 export const RefDataDocument = gql`
   query RefData {
     countries {
@@ -1136,4 +1566,139 @@ export type RefDataLazyQueryHookResult = ReturnType<typeof useRefDataLazyQuery>
 export type RefDataQueryResult = ApolloReactCommon.QueryResult<
   RefDataQuery,
   RefDataQueryVariables
+>
+export const RemoteJobsDocument = gql`
+  query RemoteJobs($where: JobWhereInput!, $orderBy: JobOrderByInput) {
+    remotes {
+      id
+      jobs(where: $where, orderBy: $orderBy) {
+        id
+        title
+        commitment {
+          id
+          title
+        }
+        cities {
+          id
+          name
+        }
+        company {
+          id
+          name
+          logoUrl
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useRemoteJobsQuery__
+ *
+ * To run a query within a React component, call `useRemoteJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRemoteJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRemoteJobsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useRemoteJobsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    RemoteJobsQuery,
+    RemoteJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<RemoteJobsQuery, RemoteJobsQueryVariables>(
+    RemoteJobsDocument,
+    baseOptions
+  )
+}
+export function useRemoteJobsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    RemoteJobsQuery,
+    RemoteJobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<
+    RemoteJobsQuery,
+    RemoteJobsQueryVariables
+  >(RemoteJobsDocument, baseOptions)
+}
+export type RemoteJobsQueryHookResult = ReturnType<typeof useRemoteJobsQuery>
+export type RemoteJobsLazyQueryHookResult = ReturnType<
+  typeof useRemoteJobsLazyQuery
+>
+export type RemoteJobsQueryResult = ApolloReactCommon.QueryResult<
+  RemoteJobsQuery,
+  RemoteJobsQueryVariables
+>
+export const JobsDocument = gql`
+  query Jobs($input: SearchArgsInput!) {
+    jobs: searchJobs(input: $input) @client {
+      id
+      title
+      commitment {
+        id
+        title
+      }
+      cities {
+        id
+        name
+      }
+      company {
+        id
+        name
+        logoUrl
+      }
+    }
+  }
+`
+
+/**
+ * __useJobsQuery__
+ *
+ * To run a query within a React component, call `useJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJobsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useJobsQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<JobsQuery, JobsQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<JobsQuery, JobsQueryVariables>(
+    JobsDocument,
+    baseOptions
+  )
+}
+export function useJobsLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    JobsQuery,
+    JobsQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<JobsQuery, JobsQueryVariables>(
+    JobsDocument,
+    baseOptions
+  )
+}
+export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>
+export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>
+export type JobsQueryResult = ApolloReactCommon.QueryResult<
+  JobsQuery,
+  JobsQueryVariables
 >

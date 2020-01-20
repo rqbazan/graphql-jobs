@@ -5,6 +5,9 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createHttpLink } from 'apollo-link-http'
 import fetch from 'isomorphic-unfetch'
+import resolvers from '~/graphql/resolvers'
+import typeDefs from '~/graphql/type-defs'
+import defaults from '~/graphql/defaults'
 
 let cachedApolloClient = null
 
@@ -17,14 +20,20 @@ function createApolloClient(initialState = {}) {
 
   const cache = new InMemoryCache().restore(initialState)
 
-  return new ApolloClient({
+  const apolloClient = new ApolloClient({
     cache,
-    ssrMode: typeof window === 'undefined',
-    link: httpLink
+    typeDefs,
+    resolvers,
+    link: httpLink,
+    ssrMode: typeof window === 'undefined'
   })
+
+  cache.writeData({ data: defaults })
+
+  return apolloClient
 }
 
-function initApolloClient(initialState) {
+export function initApolloClient(initialState) {
   if (typeof window === 'undefined') {
     return createApolloClient(initialState)
   }

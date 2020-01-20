@@ -3,6 +3,7 @@
   "ignorePatterns": ["generated"],
   "rules": {
     "import/extensions": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "@typescript-eslint/camelcase": "off"
   }
 }
