@@ -82,7 +82,7 @@ async function fetchJobs(
   return countryJobsData.country.jobs
 }
 
-const searchJobs: Resolver<Job[], QuerySearchJobsArgs> = async (
+const searchJobs: Resolver<Job[], QuerySearchJobsArgs> = (
   _,
   { input: searchArgs },
   { client }
