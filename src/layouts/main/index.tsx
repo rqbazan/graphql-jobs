@@ -2,6 +2,7 @@ import React from 'react'
 import Router from 'next/router'
 import Icon from '~/components/icon'
 import Content, { ContentType } from './content'
+import './styles.css'
 
 export interface MainLayoutProps {
   title?: React.ReactNode
@@ -14,7 +15,7 @@ const MainLayout: React.FC<MainLayoutProps> & {
 } = ({ children, title, showBackIcon = false }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col justify-end h-32 md:h-48 bg-primary">
+      <div className="header">
         <div className="px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto">
           {showBackIcon && (
             <div
