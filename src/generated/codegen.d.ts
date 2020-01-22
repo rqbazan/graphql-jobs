@@ -1105,6 +1105,33 @@ export type User = {
   updatedAt: Scalars['DateTime']
 }
 
+export type JobPreviewFragment = { __typename?: 'Job' } & Pick<
+  Job,
+  'id' | 'slug' | 'title'
+> & {
+    commitment: { __typename?: 'Commitment' } & Pick<Commitment, 'id' | 'title'>
+    cities: Maybe<Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>>
+    company: Maybe<
+      { __typename?: 'Company' } & Pick<
+        Company,
+        'id' | 'slug' | 'name' | 'logoUrl'
+      >
+    >
+  }
+
+export type JobFragment = { __typename?: 'Job' } & Pick<
+  Job,
+  'id' | 'title' | 'description' | 'applyUrl'
+> & {
+    company: Maybe<
+      { __typename?: 'Company' } & Pick<
+        Company,
+        'id' | 'slug' | 'name' | 'logoUrl'
+      >
+    >
+    tags: Maybe<Array<{ __typename?: 'Tag' } & Pick<Tag, 'id' | 'name'>>>
+  }
+
 export type SetSearchArgsMutationVariables = {
   input: SearchArgsInput
 }
@@ -1122,25 +1149,7 @@ export type CompanyJobsQueryVariables = {
 export type CompanyJobsQuery = { __typename?: 'Query' } & {
   companies: Array<
     { __typename?: 'Company' } & Pick<Company, 'id' | 'slug'> & {
-        jobs: Maybe<
-          Array<
-            { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
-                commitment: { __typename?: 'Commitment' } & Pick<
-                  Commitment,
-                  'id' | 'title'
-                >
-                cities: Maybe<
-                  Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
-                >
-                company: Maybe<
-                  { __typename?: 'Company' } & Pick<
-                    Company,
-                    'id' | 'name' | 'logoUrl'
-                  >
-                >
-              }
-          >
-        >
+        jobs: Maybe<Array<{ __typename?: 'Job' } & JobPreviewFragment>>
       }
   >
 }
@@ -1153,25 +1162,7 @@ export type CountryJobsQueryVariables = {
 
 export type CountryJobsQuery = { __typename?: 'Query' } & {
   country: { __typename?: 'Country' } & Pick<Country, 'id' | 'name'> & {
-      jobs: Maybe<
-        Array<
-          { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
-              commitment: { __typename?: 'Commitment' } & Pick<
-                Commitment,
-                'id' | 'title'
-              >
-              cities: Maybe<
-                Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
-              >
-              company: Maybe<
-                { __typename?: 'Company' } & Pick<
-                  Company,
-                  'id' | 'name' | 'logoUrl'
-                >
-              >
-            }
-        >
-      >
+      jobs: Maybe<Array<{ __typename?: 'Job' } & JobPreviewFragment>>
     }
 }
 
@@ -1182,6 +1173,15 @@ export type SearchArgsQuery = { __typename?: 'Query' } & {
     SearchArgs,
     'term' | 'countrySlug' | 'companySlug' | 'orderByCreatedAt'
   >
+}
+
+export type JobQueryVariables = {
+  companySlug: Scalars['String']
+  jobSlug: Scalars['String']
+}
+
+export type JobQuery = { __typename?: 'Query' } & {
+  job: { __typename?: 'Job' } & JobFragment
 }
 
 export type RefDataQueryVariables = {}
@@ -1203,25 +1203,7 @@ export type RemoteJobsQueryVariables = {
 export type RemoteJobsQuery = { __typename?: 'Query' } & {
   remotes: Array<
     { __typename?: 'Remote' } & Pick<Remote, 'id'> & {
-        jobs: Maybe<
-          Array<
-            { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
-                commitment: { __typename?: 'Commitment' } & Pick<
-                  Commitment,
-                  'id' | 'title'
-                >
-                cities: Maybe<
-                  Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
-                >
-                company: Maybe<
-                  { __typename?: 'Company' } & Pick<
-                    Company,
-                    'id' | 'name' | 'logoUrl'
-                  >
-                >
-              }
-          >
-        >
+        jobs: Maybe<Array<{ __typename?: 'Job' } & JobPreviewFragment>>
       }
   >
 }
@@ -1231,29 +1213,48 @@ export type JobsQueryVariables = {
 }
 
 export type JobsQuery = { __typename?: 'Query' } & {
-  jobs: Maybe<
-    Array<
-      Maybe<
-        { __typename?: 'Job' } & Pick<Job, 'id' | 'title'> & {
-            commitment: { __typename?: 'Commitment' } & Pick<
-              Commitment,
-              'id' | 'title'
-            >
-            cities: Maybe<
-              Array<{ __typename?: 'City' } & Pick<City, 'id' | 'name'>>
-            >
-            company: Maybe<
-              { __typename?: 'Company' } & Pick<
-                Company,
-                'id' | 'name' | 'logoUrl'
-              >
-            >
-          }
-      >
-    >
-  >
+  jobs: Maybe<Array<Maybe<{ __typename?: 'Job' } & JobPreviewFragment>>>
 }
 
+export const JobPreviewFragmentDoc = gql`
+  fragment jobPreview on Job {
+    id
+    slug
+    title
+    commitment {
+      id
+      title
+    }
+    cities {
+      id
+      name
+    }
+    company {
+      id
+      slug
+      name
+      logoUrl
+    }
+  }
+`
+export const JobFragmentDoc = gql`
+  fragment job on Job {
+    id
+    title
+    description
+    applyUrl
+    company {
+      id
+      slug
+      name
+      logoUrl
+    }
+    tags {
+      id
+      name
+    }
+  }
+`
 export const SetSearchArgsDocument = gql`
   mutation SetSearchArgs($input: SearchArgsInput!) {
     setSearchArgs(input: $input) @client
@@ -1308,24 +1309,11 @@ export const CompanyJobsDocument = gql`
       id
       slug
       jobs(where: $where, orderBy: $orderBy) {
-        id
-        title
-        commitment {
-          id
-          title
-        }
-        cities {
-          id
-          name
-        }
-        company {
-          id
-          name
-          logoUrl
-        }
+        ...jobPreview
       }
     }
   }
+  ${JobPreviewFragmentDoc}
 `
 
 /**
@@ -1385,24 +1373,11 @@ export const CountryJobsDocument = gql`
       id
       name
       jobs(where: $where, orderBy: $orderBy) {
-        id
-        title
-        commitment {
-          id
-          title
-        }
-        cities {
-          id
-          name
-        }
-        company {
-          id
-          name
-          logoUrl
-        }
+        ...jobPreview
       }
     }
   }
+  ${JobPreviewFragmentDoc}
 `
 
 /**
@@ -1509,6 +1484,57 @@ export type SearchArgsQueryResult = ApolloReactCommon.QueryResult<
   SearchArgsQuery,
   SearchArgsQueryVariables
 >
+export const JobDocument = gql`
+  query Job($companySlug: String!, $jobSlug: String!) {
+    job(input: { companySlug: $companySlug, jobSlug: $jobSlug }) {
+      ...job
+    }
+  }
+  ${JobFragmentDoc}
+`
+
+/**
+ * __useJobQuery__
+ *
+ * To run a query within a React component, call `useJobQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJobQuery({
+ *   variables: {
+ *      companySlug: // value for 'companySlug'
+ *      jobSlug: // value for 'jobSlug'
+ *   },
+ * });
+ */
+export function useJobQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<JobQuery, JobQueryVariables>
+) {
+  return ApolloReactHooks.useQuery<JobQuery, JobQueryVariables>(
+    JobDocument,
+    baseOptions
+  )
+}
+export function useJobLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    JobQuery,
+    JobQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<JobQuery, JobQueryVariables>(
+    JobDocument,
+    baseOptions
+  )
+}
+export type JobQueryHookResult = ReturnType<typeof useJobQuery>
+export type JobLazyQueryHookResult = ReturnType<typeof useJobLazyQuery>
+export type JobQueryResult = ApolloReactCommon.QueryResult<
+  JobQuery,
+  JobQueryVariables
+>
 export const RefDataDocument = gql`
   query RefData {
     countries {
@@ -1572,24 +1598,11 @@ export const RemoteJobsDocument = gql`
     remotes {
       id
       jobs(where: $where, orderBy: $orderBy) {
-        id
-        title
-        commitment {
-          id
-          title
-        }
-        cities {
-          id
-          name
-        }
-        company {
-          id
-          name
-          logoUrl
-        }
+        ...jobPreview
       }
     }
   }
+  ${JobPreviewFragmentDoc}
 `
 
 /**
@@ -1642,23 +1655,10 @@ export type RemoteJobsQueryResult = ApolloReactCommon.QueryResult<
 export const JobsDocument = gql`
   query Jobs($input: SearchArgsInput!) {
     jobs: searchJobs(input: $input) @client {
-      id
-      title
-      commitment {
-        id
-        title
-      }
-      cities {
-        id
-        name
-      }
-      company {
-        id
-        name
-        logoUrl
-      }
+      ...jobPreview
     }
   }
+  ${JobPreviewFragmentDoc}
 `
 
 /**

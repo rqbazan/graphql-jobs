@@ -8,15 +8,20 @@ export interface JobPreviewProps {
   job: Partial<Job>
 }
 
-const JobPreview: React.FC<JobPreviewProps> = ({ className, job }) => {
+const JobPreview: React.FC<JobPreviewProps> = ({
+  className,
+  job,
+  ...props
+}) => {
   const secondTag = job.cities?.[0]?.name ?? job.commitment?.title
 
   return (
     <div
       role="button"
       className={cs('flex rounded-xl bg-white p-4 shadow', className)}
+      {...props}
     >
-      <Avatar text={job.company.name} />
+      <Avatar text={job.company.name} imageUrl={job.company.logoUrl} />
       <div className="flex flex-col justify-between">
         <div className="text-gray-800 font-medium">{job.title}</div>
         <div className="flex text-gray-600 text-xs items-center">

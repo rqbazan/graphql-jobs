@@ -7,10 +7,14 @@ module.exports = {
       },
       colors: {
         primary: '#F25CC1',
-        secondary: '#290BA0'
+        secondary: '#290BA0',
+        content: '#7D7776',
+        title: '#2C252A'
       }
     }
   },
-  variants: {},
+  variants: {
+    margin: ['responsive', 'last']
+  },
   plugins: []
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import {
   useRefDataQuery,
   useSearchArgsQuery,
@@ -14,6 +15,7 @@ import SearchBar from '~/components/search-bar'
 import JobPreview from '~/components/job-preview'
 import AppTitle from '~/components/app-title'
 import MainLayout from '~/layouts/main'
+import Spinner from '~/components/spinner'
 import withApollo from '~/hocs/with-apollo'
 
 const AdvancedSearch = dynamic(() => import('~/components/advanced-search'))
@@ -48,7 +50,12 @@ const IndexPage: React.FC<IndexPageProps> = ({
   }, [jobs, jobsNetworkStatus])
 
   return (
-    <MainLayout title={<AppTitle className="pb-8" />}>
+    <MainLayout>
+      <MainLayout.Header>
+        <div className="md:text-center">
+          <AppTitle className="pb-8" />
+        </div>
+      </MainLayout.Header>
       <MainLayout.Content className="-mt-5">
         <SearchBar.Mobile
           placeholder="e.g.: Mobile Engineer"
@@ -65,14 +72,30 @@ const IndexPage: React.FC<IndexPageProps> = ({
           onChange={() => setIsTyping(true)}
         />
         <div
-          className="grid grid-cols-1 md:grid-cols-2 mt-4 mb-6"
+          className="grid grid-cols-1 md:grid-cols-2 mt-4 mb-6 relative"
           style={{ gridColumnGap: '1rem', gridRowGap: '1rem' }}
         >
-          {isTyping || jobsLoading
-            ? 'Loading...'
-            : jobs.map(job => (
-                <JobPreview key={job.id} job={job} className="col-span-1" />
-              ))}
+          {isTyping || jobsLoading ? (
+            <div
+              className="absolute top-0 transform -translate-x-1/2 mt-8"
+              style={{ left: '50%' }}
+            >
+              <Spinner />
+            </div>
+          ) : (
+            jobs.map(job => (
+              <Link
+                key={job.id}
+                as={`/${job.company.slug}/${job.slug}`}
+                href="/[company]/[job]"
+              >
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+                <a>
+                  <JobPreview job={job} className="col-span-1" />
+                </a>
+              </Link>
+            ))
+          )}
         </div>
       </MainLayout.Content>
     </MainLayout>
@@ -99,7 +122,7 @@ const IndexPageContainer = () => {
   const [showAdvancedSearch, setShowAdvancedSearch] = React.useState(false)
 
   if (refDataLoading || searchArgsLoading) {
-    return null
+    return <Spinner fullscreen />
   }
 
   const { searchArgs } = searchArgsData

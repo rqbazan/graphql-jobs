@@ -7,7 +7,7 @@ const Content: ContentType = ({ className, children }) => {
   return (
     <div
       className={cs(
-        'px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto',
+        'px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto z-10',
         className
       )}
     >
