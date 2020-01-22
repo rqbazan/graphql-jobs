@@ -1,5 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import {
   useRefDataQuery,
   useSearchArgsQuery,
@@ -71,7 +72,16 @@ const IndexPage: React.FC<IndexPageProps> = ({
           {isTyping || jobsLoading
             ? 'Loading...'
             : jobs.map(job => (
-                <JobPreview key={job.id} job={job} className="col-span-1" />
+                <Link
+                  key={job.id}
+                  as={`/${job.company.slug}/${job.slug}`}
+                  href="/[company]/[job]"
+                >
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid*/}
+                  <a>
+                    <JobPreview job={job} className="col-span-1" />
+                  </a>
+                </Link>
               ))}
         </div>
       </MainLayout.Content>

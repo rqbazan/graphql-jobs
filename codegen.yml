@@ -12,3 +12,6 @@ generates:
       withHOC: false
       withHooks: true
       withResultType: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write

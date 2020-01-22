@@ -8,4 +8,20 @@
 body {
   @apply bg-gray-200;
 }
+
+.markdown {
+  @apply text-content text-base;
+
+  @screen md {
+    @apply text-sm;
+  }
+
+  & ul li:not(:last-of-type) {
+    @apply mb-1;
+  }
+
+  & strong:only-child {
+    @apply my-2 block text-lg font-medium text-title;
+  }
+}
 /* purgecss end ignore */
