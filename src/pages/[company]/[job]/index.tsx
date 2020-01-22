@@ -32,6 +32,7 @@ const JobPage: React.FC<JobPageProps> = ({ job }) => {
         <Avatar
           className="h-20 w-20 text-2xl shadow-sm"
           text={job.company.name}
+          imageUrl={job.company.logoUrl}
         />
         <div className="mt-4" style={{ marginBottom: '5.5rem' }}>
           <h1 className="text-2xl font-medium">{job.title}</h1>
