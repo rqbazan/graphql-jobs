@@ -7,6 +7,7 @@ import Avatar from '~/components/avatar'
 import withApollo from '~/hocs/with-apollo'
 import Tag from '~/components/tag'
 import FAB from '~/components/fab'
+import Spinner from '~/components/spinner'
 
 interface JobPageContainerProps {
   jobSlug: string
@@ -75,7 +76,7 @@ const JobPageContainer: NextPage<JobPageContainerProps> = ({
   const { data, loading } = useJobQuery({ variables: { jobSlug, companySlug } })
 
   if (loading) {
-    return <div>Loading...</div>
+    return <Spinner fullscreen />
   }
 
   return <JobPage job={data.job} />
