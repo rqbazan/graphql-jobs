@@ -1,5 +1,6 @@
 import React from 'react'
 import { NextPage } from 'next'
+import Router from 'next/router'
 import { useJobQuery, Job } from '@codegen'
 import ReactMarkdown from 'react-markdown'
 import MainLayout from '~/layouts/main'
@@ -7,6 +8,7 @@ import Avatar from '~/components/avatar'
 import withApollo from '~/hocs/with-apollo'
 import Tag from '~/components/tag'
 import FAB from '~/components/fab'
+import Icon from '~/components/icon'
 import Spinner from '~/components/spinner'
 
 interface JobPageContainerProps {
@@ -28,7 +30,18 @@ const ListItem: React.FC = ({ children }) => {
 
 const JobPage: React.FC<JobPageProps> = ({ job }) => {
   return (
-    <MainLayout showBackIcon>
+    <MainLayout>
+      <MainLayout.Header>
+        <div
+          role="button"
+          tabIndex={0}
+          className="md:hidden pt-6 absolute top-0"
+          onClick={() => Router.back()}
+          onKeyPress={() => Router.back()}
+        >
+          <Icon name="arrow-left" />
+        </div>
+      </MainLayout.Header>
       <MainLayout.Content className="-mt-10">
         <Avatar
           className="h-20 w-20 text-2xl shadow-sm"

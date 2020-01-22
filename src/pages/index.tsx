@@ -14,8 +14,8 @@ import { NetworkStatus } from 'apollo-client'
 import SearchBar from '~/components/search-bar'
 import JobPreview from '~/components/job-preview'
 import AppTitle from '~/components/app-title'
-import Spinner from '~/components/spinner'
 import MainLayout from '~/layouts/main'
+import Spinner from '~/components/spinner'
 import withApollo from '~/hocs/with-apollo'
 
 const AdvancedSearch = dynamic(() => import('~/components/advanced-search'))
@@ -50,7 +50,12 @@ const IndexPage: React.FC<IndexPageProps> = ({
   }, [jobs, jobsNetworkStatus])
 
   return (
-    <MainLayout title={<AppTitle className="pb-8" />}>
+    <MainLayout>
+      <MainLayout.Header>
+        <div className="md:text-center">
+          <AppTitle className="pb-8" />
+        </div>
+      </MainLayout.Header>
       <MainLayout.Content className="-mt-5">
         <SearchBar.Mobile
           placeholder="e.g.: Mobile Engineer"
