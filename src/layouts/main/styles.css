@@ -1,5 +1,5 @@
 .header {
-  @apply flex flex-col justify-end h-32 bg-primary;
+  @apply flex flex-col justify-end h-32 bg-primary relative;
 
   @screen md {
     @apply h-48;

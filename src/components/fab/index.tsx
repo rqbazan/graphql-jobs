@@ -12,7 +12,7 @@ const FAB: React.FC<FABProps> = ({ children, className, style }) => {
       type="button"
       style={style}
       className={cs(
-        'bg-secondary text-white font-semibold px-6 h-10 rounded-full shadow-md focus:outline-none',
+        'bg-secondary text-white font-semibold px-6 h-10 rounded-full shadow-md focus:outline-none z-20',
         className
       )}
     >

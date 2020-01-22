@@ -16,6 +16,12 @@ const MainLayout: React.FC<MainLayoutProps> & {
   return (
     <div className="flex flex-col">
       <div className="header">
+        <a
+          href="/"
+          className="h-12 w-12 md:h-16 md:w-16 absolute top-0 right-0 mt-6 mr-6"
+        >
+          <img src="/logo.png" alt="logo" />
+        </a>
         <div className="px-6 md:px-0 md:w-full md:max-w-2xl md:mx-auto">
           {showBackIcon && (
             <div
